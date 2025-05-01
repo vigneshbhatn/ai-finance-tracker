@@ -19,3 +19,10 @@ class ExpenseResponse(BaseModel):
 
     class Config:
         orm_mode = True  # This tells Pydantic to read data from SQLAlchemy objects
+
+
+class ExpenseUpdate(BaseModel):
+    amount: Optional[float] = None
+    category: Optional[str] = None
+    description: Optional[str] = None
+    date: Optional[datetime] = None

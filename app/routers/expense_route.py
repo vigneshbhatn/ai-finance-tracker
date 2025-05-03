@@ -5,17 +5,9 @@ from sqlalchemy.orm import Session
 from app.models.expense_model import Expense  #importing the table
 from app.schema.expense_schema import ExpenseCreate
 from app.schema.expense_schema import ExpenseUpdate
-from app.database import  SessionLocal
+from config import get_db
 
 router = APIRouter()
-
-# Dependency to get the database session
-def get_db():
-    db = SessionLocal()  # This gets the database session.
-    try:
-        yield db # this one connects to the db
-    finally:
-        db.close()
 
 @router.post("/expense/")  # creates the expense
 async def create_expense(expense: ExpenseCreate, db: Session = Depends(get_db)):

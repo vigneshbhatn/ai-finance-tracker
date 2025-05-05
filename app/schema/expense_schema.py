@@ -1,10 +1,11 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field
 from datetime import datetime
 from typing import Optional
 
 # Used when creating a new expense
 class ExpenseCreate(BaseModel):
-    amount: float
+    amount: float = Field(..., gt=0, description="Amount must be greater than zero")
     category: str
     description: Optional[str] = None
     date: Optional[datetime] = None
@@ -22,7 +23,7 @@ class ExpenseResponse(BaseModel):
 
 
 class ExpenseUpdate(BaseModel):
-    amount: Optional[float] = None
+    amount: Optional[float] = Field(..., gt=0, description="Amount must be greater than zero")
     category: Optional[str] = None
     description: Optional[str] = None
     date: Optional[datetime] = None

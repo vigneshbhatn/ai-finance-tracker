@@ -1,4 +1,4 @@
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, Field
 from datetime import datetime
 from typing import Optional
 from enum import Enum
@@ -20,7 +20,7 @@ class MonthEnum(str, Enum):
 class BudgetCreate(BaseModel):
     month: MonthEnum  # Month when the budget is set (e.g. 'April', 'May', etc.)
     year: int  # Year of the budget (e.g. 2025)
-    amount: float  # The total amount of the budget for that month
+    amount: float = Field(..., gt=0, description="Amount must be greater than zero")  # The total amount of the budget for that month
 
     # This will automatically convert input to proper format
     class Config:
@@ -38,4 +38,4 @@ class BudgetResponse(BudgetCreate):
 class BudgetUpdate(BaseModel):
     month: MonthEnum
     year: int
-    amount: float
+    amount: float = Field(..., gt=0, description="Amount must be greater than zero")

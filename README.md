@@ -33,7 +33,7 @@ This is the **FastAPI** backend for the AI-powered personal finance tracker. The
 - SQLite is used as the default database.
 - You can inspect and manage the database using DBeaver.
 
-##📈 Coming Soon
+## 📈 Coming Soon
 - AI module for analyzing spending behavior
 - Personalized budget recommendations
 - JWT authentication + secure user sessions

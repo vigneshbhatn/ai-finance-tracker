@@ -1,16 +1,14 @@
-from pydantic import BaseModel, Field, EmailStr
-from typing import Optional
+from pydantic import BaseModel, EmailStr
 
-class UserModel(BaseModel):
+class UserBase(BaseModel):
     username: str
     email: EmailStr
-    hashed_password: str
 
-class UserCreate(UserModel):
-    pass
+class UserCreate(UserBase):
+    password: str  # Plain password sent by user
 
-class UserResponse(UserModel):
+class UserResponse(UserBase):
     id: int
 
     class Config:
-        orn_mode = True
+        orm_mode = True

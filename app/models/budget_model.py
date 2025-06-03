@@ -1,5 +1,5 @@
 # models/budget_model.py
-from sqlalchemy import Column, Integer, String, Float, DateTime
+from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey
 from app.models import Base
 from datetime import datetime
 from sqlalchemy import UniqueConstraint
@@ -13,3 +13,4 @@ class Budget(Base):
     year = Column(Integer, nullable=False)
     amount = Column(Float, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
+    username = Column(String, ForeignKey("users.username"))

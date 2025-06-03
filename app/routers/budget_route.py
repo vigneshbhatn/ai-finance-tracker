@@ -9,14 +9,16 @@ from app.schema.budget_schema import BudgetResponse
 from app.schema.budget_schema import BudgetUpdate
 from app.database import  SessionLocal
 from config import get_db
+from app.util.security import get_current_user
 router = APIRouter()
 
 @router.post("/budget") #creates and sets a budget
-async def create_budget(budget: BudgetCreate, db: Session = Depends(get_db)):
+async def create_budget(budget: BudgetCreate, db: Session = Depends(get_db),username: str = Depends(get_current_user)):
     db_budget = Budget(
         month = budget.month,
         year = budget.year,
         amount = budget.amount,
+        username = username
     )
 
     db.add(db_budget)

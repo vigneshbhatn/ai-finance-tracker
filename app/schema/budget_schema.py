@@ -31,6 +31,7 @@ class BudgetCreate(BaseModel):
 class BudgetResponse(BudgetCreate):
     id: int  # The ID that was assigned by the database
     created_at: datetime  # The timestamp when the budget was created
+    username: str
 
     class Config:
         orm_mode = True

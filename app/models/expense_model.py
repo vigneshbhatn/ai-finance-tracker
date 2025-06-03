@@ -1,9 +1,8 @@
 # models/expense_model.py
-from sqlalchemy import Column, Integer, String, Float, DateTime
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey
+from app.models import Base
 from datetime import datetime
 
-Base = declarative_base()
 
 class Expense(Base):
     __tablename__ = 'expenses'  # This defines the name of the table in the database.
@@ -14,3 +13,4 @@ class Expense(Base):
     category = Column(String(100), nullable=False)  # Category of the expense (e.g., Food, Transportation).
     description = Column(String(255), nullable=True)  # Optional description.
     date = Column(DateTime, default=datetime, nullable=False)  # Date of expense (defaults to current time).
+    username = Column(String,ForeignKey("users.username"))

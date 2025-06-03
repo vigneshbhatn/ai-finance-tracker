@@ -6,17 +6,25 @@ from app.models.expense_model import Expense  #importing the table
 from app.schema.expense_schema import ExpenseCreate
 from app.schema.expense_schema import ExpenseUpdate
 from config import get_db
+from fastapi.security import OAuth2PasswordBearer
+from app.util.security import verify_token
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login")
+
+def get_current_user(token: str = Depends(oauth2_scheme)):
+    return verify_token(token)
 
 router = APIRouter()
 
 @router.post("/expense/")  # creates the expense
-async def create_expense(expense: ExpenseCreate, db: Session = Depends(get_db)):
+async def create_expense(expense: ExpenseCreate, db: Session = Depends(get_db),username: str = Depends(get_current_user)):
     # Create a new expense object using the data received in the request.
     db_expense = Expense(
         amount=expense.amount,
         category=expense.category,
         description=expense.description,
-        date=expense.date or datetime.utcnow()  # If no date is provided, use the current date.
+        date=expense.date or datetime.utcnow(),  # If no date is provided, use the current date.
+        username = username,
     )
     
     db.add(db_expense)  # Add the expense to the database.

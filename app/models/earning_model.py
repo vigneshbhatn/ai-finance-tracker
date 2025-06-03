@@ -1,9 +1,7 @@
 # models/expense_model.py
 from sqlalchemy import Column, Integer, String, Float, DateTime
-from sqlalchemy.ext.declarative import declarative_base
+from app.models import Base
 from datetime import datetime
-
-Base= declarative_base()
 
 class Earning(Base):
     __tablename__ = 'earnings'

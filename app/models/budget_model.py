@@ -1,9 +1,9 @@
 # models/budget_model.py
 from sqlalchemy import Column, Integer, String, Float, DateTime
-from sqlalchemy.ext.declarative import declarative_base
+from app.models import Base
 from datetime import datetime
 from sqlalchemy import UniqueConstraint
-Base = declarative_base()
+
 
 class Budget(Base):
     __tablename__ = 'budgets'

@@ -28,9 +28,9 @@ async def create_budget(budget: BudgetCreate, db: Session = Depends(get_db),user
 
 
 @router.get("/budget/status/")
-def get_budget_status(month: str, year: int, db: Session = Depends(get_db)):
+def get_budget_status(month: str, year: int, db: Session = Depends(get_db),username: str = Depends(get_current_user)):
     # Fetch the budget for the given month and year
-    budget = db.query(Budget).filter(month == Budget.month, year == Budget.year).first()
+    budget = db.query(Budget).filter(month == Budget.month, year == Budget.year,).first()
 
     if not budget:
         raise HTTPException(status_code=404, detail="Budget not set for this month and year.")

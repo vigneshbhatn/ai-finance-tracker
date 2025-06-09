@@ -24,7 +24,7 @@ async def create_expense(expense: ExpenseCreate, db: Session = Depends(get_db),u
         category=expense.category,
         description=expense.description,
         date=expense.date or datetime.utcnow(),  # If no date is provided, use the current date.
-        username = username,
+        username = username
     )
     
     db.add(db_expense)  # Add the expense to the database.
@@ -34,13 +34,13 @@ async def create_expense(expense: ExpenseCreate, db: Session = Depends(get_db),u
     return db_expense  # Return the created expense (as a response).
 
 @router.get("/expenses/")  #Reads all the expenses
-def read_expenses(db: Session = Depends(get_db)):
-    return db.query(Expense).all()
+def read_expenses(db: Session = Depends(get_db),username: str = Depends(get_current_user)):
+    return db.query(Expense).filter(username == Expense.username).all()
 
 
 @router.delete("/expense/{expense_id}") #deletes the expense
-def delete_expense(expense_id: int, db: Session = Depends(get_db)):
-    expense = db.query(Expense).filter(expense_id == Expense.id).first()
+def delete_expense(expense_id: int, db: Session = Depends(get_db),username: str = Depends(get_current_user)):
+    expense = db.query(Expense).filter(username == Expense.username,expense_id == Expense.id).first()
     if expense is None:
         raise HTTPException(status_code=404, detail="Expense not found")
 
@@ -49,8 +49,8 @@ def delete_expense(expense_id: int, db: Session = Depends(get_db)):
     return {"message": "Expense deleted"}
 
 @router.put("/expense/{expense_id}") #updates the given expenses accorindit to the id
-def update_expense(expense_id: int, updated_data: ExpenseUpdate, db: Session = Depends(get_db)):
-    expense = db.query(Expense).filter(expense_id == Expense.id).first()
+def update_expense(expense_id: int, updated_data: ExpenseUpdate, db: Session = Depends(get_db),username: str = Depends(get_current_user)):
+    expense = db.query(Expense).filter(username == Expense.username,expense_id == Expense.id).first()
     if not expense:
         raise HTTPException(status_code=404, detail="Expense not found")
 

@@ -14,5 +14,6 @@ class EarningCreate(EarningBase):
 
 class EarningResponse(EarningBase):
     id: int
+    user_id: int
     class Config:
         orm_mode = True

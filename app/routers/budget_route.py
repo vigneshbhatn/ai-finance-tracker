@@ -4,6 +4,7 @@ from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
 from app.models.expense_model import Expense
 from app.models.budget_model import Budget  #importing the table
+from app.models.user_model import User
 from app.schema.budget_schema import BudgetCreate
 from app.schema.budget_schema import BudgetResponse
 from app.schema.budget_schema import BudgetUpdate
@@ -13,12 +14,12 @@ from app.util.security import get_current_user
 router = APIRouter()
 
 @router.post("/budget") #creates and sets a budget
-async def create_budget(budget: BudgetCreate, db: Session = Depends(get_db),username: str = Depends(get_current_user)):
+async def create_budget(budget: BudgetCreate, db: Session = Depends(get_db),user: User = Depends(get_current_user)):
     db_budget = Budget(
         month = budget.month,
         year = budget.year,
         amount = budget.amount,
-        username = username
+        user_id = user.id
     )
 
     db.add(db_budget)
@@ -28,9 +29,9 @@ async def create_budget(budget: BudgetCreate, db: Session = Depends(get_db),user
 
 
 @router.get("/budget/status/")
-def get_budget_status(month: str, year: int, db: Session = Depends(get_db),username: str = Depends(get_current_user)):
+def get_budget_status(month: str, year: int, db: Session = Depends(get_db),user: User = Depends(get_current_user)):
     # Fetch the budget for the given month and year
-    budget = db.query(Budget).filter(username == Budget.username,month == Budget.month, year == Budget.year).first()
+    budget = db.query(Budget).filter(user.id == Budget.user_id, month == Budget.month, year == Budget.year).first()
 
     if not budget:
         raise HTTPException(status_code=404, detail="Budget not set for this month and year.")
@@ -62,8 +63,8 @@ def get_budget_status(month: str, year: int, db: Session = Depends(get_db),usern
     }
 
 @router.get("/budgets/")
-def get_budgets(db: Session = Depends(get_db),username:str = Depends(get_current_user)):
-    return db.query(Budget).filter(Budget.username == username).order_by(Budget.year, Budget.month).all()
+def get_budgets(db: Session = Depends(get_db),user:User = Depends(get_current_user)):
+    return db.query(Budget).filter(user.id == Budget.user_id).order_by(Budget.year, Budget.month).all()
 
 @router.put("/budgets/")
 def update_budget(budget_update: BudgetUpdate, db: Session = Depends(get_db),username:str = Depends(get_current_user)):

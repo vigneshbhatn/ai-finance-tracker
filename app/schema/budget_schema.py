@@ -31,7 +31,7 @@ class BudgetCreate(BaseModel):
 class BudgetResponse(BudgetCreate):
     id: int  # The ID that was assigned by the database
     created_at: datetime  # The timestamp when the budget was created
-    username: str
+    user_id: int
 
     class Config:
         orm_mode = True
@@ -40,4 +40,4 @@ class BudgetUpdate(BaseModel):
     month: MonthEnum
     year: int
     amount: float = Field(..., gt=0, description="Amount must be greater than zero")
-    username: str
+    user_id: int

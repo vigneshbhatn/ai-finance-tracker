@@ -13,4 +13,4 @@ class Expense(Base):
     category = Column(String(100), nullable=False)  # Category of the expense (e.g., Food, Transportation).
     description = Column(String(255), nullable=True)  # Optional description.
     date = Column(DateTime, default=datetime, nullable=False)  # Date of expense (defaults to current time).
-    username = Column(String,ForeignKey("users.username"))
+    user_id = Column(Integer, ForeignKey("users.id"))

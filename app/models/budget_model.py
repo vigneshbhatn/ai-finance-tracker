@@ -13,4 +13,4 @@ class Budget(Base):
     year = Column(Integer, nullable=False)
     amount = Column(Float, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
-    username = Column(String, ForeignKey("users.username"))
+    user_id = Column(Integer, ForeignKey("users.id"))

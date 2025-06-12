@@ -40,3 +40,4 @@ class BudgetUpdate(BaseModel):
     month: MonthEnum
     year: int
     amount: float = Field(..., gt=0, description="Amount must be greater than zero")
+    username: str

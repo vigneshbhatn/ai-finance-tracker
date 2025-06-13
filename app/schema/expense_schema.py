@@ -28,4 +28,4 @@ class ExpenseUpdate(BaseModel):
     category: Optional[str] = None
     description: Optional[str] = None
     date: Optional[datetime] = None
-    user_id: int
+

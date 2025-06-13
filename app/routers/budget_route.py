@@ -65,9 +65,8 @@ def get_budgets(db: Session = Depends(get_db),user:User = Depends(get_current_us
     return db.query(Budget).filter(user.id == Budget.user_id).order_by(Budget.year, Budget.month).all()
 
 @router.put("/budgets/")
-def update_budget(budget_update: BudgetUpdate, db: Session = Depends(get_db),username:str = Depends(get_current_user)):
-    existing_budget = db.query(Budget).filter(
-        username == Budget.username,budget_update.month == Budget.month,
+def update_budget(budget_update: BudgetUpdate, db: Session = Depends(get_db),user:User = Depends(get_current_user)):
+    existing_budget = db.query(Budget).filter(user.id == Budget.user_id,budget_update.month == Budget.month,
         budget_update.year == Budget.year
     ).first()
 

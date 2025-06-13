@@ -6,9 +6,8 @@ from app.models.expense_model import Expense #importing the table
 from app.models.user_model import User
 from app.schema.expense_schema import ExpenseCreate
 from app.schema.expense_schema import ExpenseUpdate
-from config import get_db
+from app.util.config import get_db
 from fastapi.security import OAuth2PasswordBearer
-from app.util.security import verify_token
 from app.util.security import get_current_user
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login")
 

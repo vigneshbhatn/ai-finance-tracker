@@ -6,10 +6,8 @@ from app.models.expense_model import Expense
 from app.models.budget_model import Budget  #importing the table
 from app.models.user_model import User
 from app.schema.budget_schema import BudgetCreate
-from app.schema.budget_schema import BudgetResponse
 from app.schema.budget_schema import BudgetUpdate
-from app.database import  SessionLocal
-from config import get_db
+from app.util.config import get_db
 from app.util.security import get_current_user
 router = APIRouter()
 

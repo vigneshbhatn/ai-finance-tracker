@@ -6,7 +6,7 @@ from app.models.earning_model import Earning
 from app.models.user_model import User
 from app.schema.earning_schema import EarningCreate
 from app.schema.earning_schema import EarningResponse
-from config import get_db
+from app.util.config import get_db
 from app.util.security import get_current_user
 
 router = APIRouter()

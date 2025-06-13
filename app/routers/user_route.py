@@ -1,6 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
-from app.util.security import verify_token
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login")
 router = APIRouter()
@@ -11,7 +10,7 @@ def get_current_user(token: str = Depends(oauth2_scheme)):
     return {"username": username}
 
 from sqlalchemy.orm import Session
-from config import get_db
+from app.util.config import get_db
 from app.models.user_model import User
 from app.schema.user_schema import UserCreate, UserResponse
 from app.util.security import get_password_hash,verify_token  # this hashes passwords

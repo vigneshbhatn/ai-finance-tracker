@@ -29,7 +29,7 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jose import jwt, JWTError
 from sqlalchemy.orm import Session
-from app.database import get_db
+from app.util.database import get_db
 from app.models.user_model import User
 
 SECRET_KEY = "your_super_secret_key"  # same as before

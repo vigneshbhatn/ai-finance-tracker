@@ -7,7 +7,10 @@ from sqlalchemy import UniqueConstraint
 
 class Budget(Base):
     __tablename__ = 'budgets'
-    __table_args__ = (UniqueConstraint('month', 'year', name='unique_month_year'),) #adding this so that the years and months are unique
+    __table_args__ = (
+        UniqueConstraint('user_id', 'month', 'year', name='unique_user_budget'),
+    )
+
     id = Column(Integer, primary_key=True, index=True)
     month = Column(String(20), nullable=False)
     year = Column(Integer, nullable=False)

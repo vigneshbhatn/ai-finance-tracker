@@ -3,6 +3,7 @@ from app.models import Base
 
 class User(Base):
     __tablename__ = 'users'
+    __table_args__ = {'extend_existing': True}
 
     id = Column(Integer, primary_key=True, autoincrement=True)  # Unique identifier for each expense.
     username = Column(String(50),unique = True, index= True, nullable = False)
